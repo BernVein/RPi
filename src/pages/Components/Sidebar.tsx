@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Button } from "@heroui/button";
+import { useState, useEffect } from "react";
+import { Button } from "@heroui/react";
 import {
 	Card,
 	CardBody,
@@ -9,24 +9,24 @@ import {
 	AccordionItem,
 } from "@heroui/react";
 import { ScrollShadow } from "@heroui/scroll-shadow";
-import { Listbox, ListboxItem, ListboxSection } from "@heroui/listbox";
-import { HomeIcon, DetectAdulterantIcon } from "@/components/icons";
+import { DetectAdulterantIcon, HomeIcon } from "@/components/icons";
 
 export function Sidebar() {
 	const [selectedKey, setSelectedKey] = useState<string>("home");
-	// const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-
+	useEffect(() => {
+		console.log(selectedKey);
+	}, [selectedKey]);
 	return (
-		<div className="flex h-screen w-full overflow-hidden bg-default-50">
+		<div className="flex h-screen w-full overflow-hidden">
 			{/* Sidebar */}
-			<Card className="rounded-none h-full transition-all duration-300 border-r border-divider w-72">
+			<Card className="rounded-none h-full w-72">
 				{/* Header */}
 				<CardHeader className="py-4 px-4">
 					<div className="flex items-center gap-3 w-full">
 						<Image
 							src="/vsu_logo.jpg"
 							alt="VSU Logo"
-							className="rounded-full w-15 h-15 object-cover"
+							className="rounded-sm w-15 h-15 object-cover"
 						/>
 
 						<div className="flex flex-col leading-tight items-center">
@@ -41,112 +41,137 @@ export function Sidebar() {
 				</CardHeader>
 
 				<CardBody className="px-3 overflow-hidden">
-					{/* Collapse Button */}
-					{/* <div
-						className={`flex items-center mb-4 ${isCollapsed ? "justify-center" : "justify-end"}`}
-					>
-						<Button
-							isIconOnly
-							variant="light"
-							size="sm"
-							onPress={() => setIsCollapsed(!isCollapsed)}
-						>
-							<MenuIcon className="w-5" />
-						</Button>
-					</div> */}
-
 					<ScrollShadow className="h-full pr-2">
-						<Listbox
-							selectedKeys={new Set([selectedKey])}
-							selectionMode="single"
-							hideSelectedIcon
-							onAction={(key) => setSelectedKey(key as string)}
+						<div className="text-xs font-semibold uppercase text-default-500 tracking-wider mt-3 mb-1 ml-2">
+							MENU
+						</div>
+						<Button
+							variant={selectedKey === "home" ? "flat" : "light"}
+							className="justify-start"
+							onPress={() => setSelectedKey("home")}
+							fullWidth
+							color={
+								selectedKey === "home" ? "success" : "default"
+							}
+							startContent={<HomeIcon className="w-5 h-5" />}
 						>
-							<ListboxSection title="MENU">
-								{/* Home */}
-								<ListboxItem
-									key="home"
-									startContent={<HomeIcon className="w-5" />}
+							<span className="text-sm font-medium">Home</span>
+						</Button>
+						<div className="text-xs font-semibold uppercase text-default-500 tracking-wider mt-3 mb-1 ml-2">
+							DETECTION
+						</div>
+						<Accordion
+							isCompact
+							className="ml-2"
+							showDivider={false}
+						>
+							<AccordionItem
+								key="1"
+								title="Adulterant"
+								classNames={{
+									title: "text-sm font-medium",
+								}}
+								startContent={
+									<DetectAdulterantIcon className="w-6 h-6" />
+								}
+							>
+								<Button
+									variant={
+										selectedKey === "rice-bran-adulterant"
+											? "flat"
+											: "light"
+									}
+									className="justify-start"
+									onPress={() =>
+										setSelectedKey("rice-bran-adulterant")
+									}
+									fullWidth
+									color={
+										selectedKey === "rice-bran-adulterant"
+											? "success"
+											: "default"
+									}
 								>
-									<span className="text-sm font-medium">
-										Home
+									<span className="ml-5 text-sm font-medium">
+										Rice Bran
 									</span>
-								</ListboxItem>
-							</ListboxSection>
-
-							{/* Detect Section */}
-							<ListboxSection title="DETECT">
-								<ListboxItem key="detect-adulteration">
-									<Accordion
-										isCompact
-										variant="light"
-										className="w-full px-0 "
-									>
-										<AccordionItem
-											startContent={
-												<DetectAdulterantIcon className="w-5" />
-											}
-											title={
-												<span className="text-sm font-medium">
-													Adulteration
-												</span>
-											}
-											className="px-0"
-										>
-											<div className="flex flex-col gap-1 pl-6">
-												<Button
-													variant="light"
-													className="justify-start"
-												>
-													Rice Bran
-												</Button>
-												<Button
-													variant="light"
-													className="justify-start"
-												>
-													Sample 2
-												</Button>
-											</div>
-										</AccordionItem>
-									</Accordion>
-								</ListboxItem>
-
-								<ListboxItem key="detect-infestation">
-									<Accordion
-										isCompact
-										variant="light"
-										className="w-full px-0"
-									>
-										<AccordionItem
-											startContent={
-												<DetectAdulterantIcon className="w-5" />
-											}
-											title={
-												<span className="text-sm font-medium">
-													Infestation
-												</span>
-											}
-											className="px-0"
-										>
-											<div className="flex flex-col gap-1 pl-6">
-												<Button
-													variant="light"
-													className="justify-start"
-												>
-													Sample A
-												</Button>
-												<Button
-													variant="light"
-													className="justify-start"
-												>
-													Sample B
-												</Button>
-											</div>
-										</AccordionItem>
-									</Accordion>
-								</ListboxItem>
-							</ListboxSection>
-						</Listbox>
+								</Button>
+								<Button
+									variant={
+										selectedKey === "item-2-adulterant"
+											? "flat"
+											: "light"
+									}
+									className="justify-start"
+									onPress={() =>
+										setSelectedKey("item-2-adulterant")
+									}
+									fullWidth
+									color={
+										selectedKey === "item-2-adulterant"
+											? "success"
+											: "default"
+									}
+								>
+									<span className="ml-5 text-sm font-medium">
+										Item 2
+									</span>
+								</Button>
+							</AccordionItem>
+							<AccordionItem
+								key="2"
+								title="Infectant"
+								classNames={{
+									title: "text-sm font-medium",
+								}}
+								startContent={
+									<DetectAdulterantIcon className="w-6 h-6" />
+								}
+							>
+								<Button
+									variant={
+										selectedKey === "rice-bran-infectant"
+											? "flat"
+											: "light"
+									}
+									className="justify-start"
+									onPress={() =>
+										setSelectedKey("rice-bran-infectant")
+									}
+									fullWidth
+									color={
+										selectedKey === "rice-bran-infectant"
+											? "success"
+											: "default"
+									}
+								>
+									<span className="ml-5 text-sm font-medium">
+										Rice Bran
+									</span>
+								</Button>
+								<Button
+									variant={
+										selectedKey === "item-2-infectant"
+											? "flat"
+											: "light"
+									}
+									className="justify-start"
+									onPress={() =>
+										setSelectedKey("item-2-infectant")
+									}
+									fullWidth
+									color={
+										selectedKey === "item-2-infectant"
+											? "success"
+											: "default"
+									}
+								>
+									<span className="ml-5 text-sm font-medium">
+										Item 2
+									</span>
+								</Button>
+							</AccordionItem>
+						</Accordion>
 					</ScrollShadow>
 				</CardBody>
 			</Card>
