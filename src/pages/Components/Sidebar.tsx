@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Button } from "@heroui/react";
 import {
 	Card,
 	CardBody,
@@ -7,12 +6,21 @@ import {
 	Image,
 	Accordion,
 	AccordionItem,
+	Divider,
+	Button,
+	CardFooter,
 } from "@heroui/react";
-import { ScrollShadow } from "@heroui/scroll-shadow";
-import { DetectAdulterantIcon, HomeIcon } from "@/components/icons";
+import {
+	DetectAdulterantIcon,
+	HomeIcon,
+	SunIcon,
+	MoonIcon,
+} from "@/components/icons";
+import { useTheme } from "@heroui/use-theme";
 
 export function Sidebar() {
 	const [selectedKey, setSelectedKey] = useState<string>("home");
+	const { theme, setTheme } = useTheme();
 	useEffect(() => {
 		console.log(selectedKey);
 	}, [selectedKey]);
@@ -39,141 +47,156 @@ export function Sidebar() {
 						</div>
 					</div>
 				</CardHeader>
+				<Divider />
 
 				<CardBody className="px-3 overflow-hidden">
-					<ScrollShadow className="h-full pr-2">
-						<div className="text-xs font-semibold uppercase text-default-500 tracking-wider mt-3 mb-1 ml-2">
-							MENU
-						</div>
-						<Button
-							variant={selectedKey === "home" ? "flat" : "light"}
-							className="justify-start"
-							onPress={() => setSelectedKey("home")}
-							fullWidth
-							color={
-								selectedKey === "home" ? "success" : "default"
+					<div className="text-xs font-semibold uppercase text-default-500 tracking-wider mb-1 ml-2">
+						MENU
+					</div>
+					<Button
+						variant={selectedKey === "home" ? "flat" : "light"}
+						className="justify-start"
+						onPress={() => setSelectedKey("home")}
+						fullWidth
+						color={selectedKey === "home" ? "success" : "default"}
+						startContent={<HomeIcon className="w-5 h-5" />}
+					>
+						<span className="text-sm font-medium">Home</span>
+					</Button>
+					<div className="text-xs font-semibold uppercase text-default-500 tracking-wider mt-3 mb-1 ml-2">
+						DETECTION
+					</div>
+					<Accordion isCompact className="ml-2" showDivider={false}>
+						<AccordionItem
+							key="1"
+							title="Adulterant"
+							classNames={{
+								title: "text-sm font-medium",
+							}}
+							startContent={
+								<DetectAdulterantIcon className="w-6 h-6" />
 							}
-							startContent={<HomeIcon className="w-5 h-5" />}
 						>
-							<span className="text-sm font-medium">Home</span>
-						</Button>
-						<div className="text-xs font-semibold uppercase text-default-500 tracking-wider mt-3 mb-1 ml-2">
-							DETECTION
-						</div>
-						<Accordion
-							isCompact
-							className="ml-2"
-							showDivider={false}
-						>
-							<AccordionItem
-								key="1"
-								title="Adulterant"
-								classNames={{
-									title: "text-sm font-medium",
-								}}
-								startContent={
-									<DetectAdulterantIcon className="w-6 h-6" />
+							<Button
+								variant={
+									selectedKey === "rice-bran-adulterant"
+										? "flat"
+										: "light"
+								}
+								className="justify-start"
+								onPress={() =>
+									setSelectedKey("rice-bran-adulterant")
+								}
+								fullWidth
+								color={
+									selectedKey === "rice-bran-adulterant"
+										? "success"
+										: "default"
 								}
 							>
-								<Button
-									variant={
-										selectedKey === "rice-bran-adulterant"
-											? "flat"
-											: "light"
-									}
-									className="justify-start"
-									onPress={() =>
-										setSelectedKey("rice-bran-adulterant")
-									}
-									fullWidth
-									color={
-										selectedKey === "rice-bran-adulterant"
-											? "success"
-											: "default"
-									}
-								>
-									<span className="ml-5 text-sm font-medium">
-										Rice Bran
-									</span>
-								</Button>
-								<Button
-									variant={
-										selectedKey === "item-2-adulterant"
-											? "flat"
-											: "light"
-									}
-									className="justify-start"
-									onPress={() =>
-										setSelectedKey("item-2-adulterant")
-									}
-									fullWidth
-									color={
-										selectedKey === "item-2-adulterant"
-											? "success"
-											: "default"
-									}
-								>
-									<span className="ml-5 text-sm font-medium">
-										Item 2
-									</span>
-								</Button>
-							</AccordionItem>
-							<AccordionItem
-								key="2"
-								title="Infectant"
-								classNames={{
-									title: "text-sm font-medium",
-								}}
-								startContent={
-									<DetectAdulterantIcon className="w-6 h-6" />
+								<span className="ml-5 text-sm font-medium">
+									Rice Bran
+								</span>
+							</Button>
+							<Button
+								variant={
+									selectedKey === "item-2-adulterant"
+										? "flat"
+										: "light"
+								}
+								className="justify-start"
+								onPress={() =>
+									setSelectedKey("item-2-adulterant")
+								}
+								fullWidth
+								color={
+									selectedKey === "item-2-adulterant"
+										? "success"
+										: "default"
 								}
 							>
-								<Button
-									variant={
-										selectedKey === "rice-bran-infectant"
-											? "flat"
-											: "light"
-									}
-									className="justify-start"
-									onPress={() =>
-										setSelectedKey("rice-bran-infectant")
-									}
-									fullWidth
-									color={
-										selectedKey === "rice-bran-infectant"
-											? "success"
-											: "default"
-									}
-								>
-									<span className="ml-5 text-sm font-medium">
-										Rice Bran
-									</span>
-								</Button>
-								<Button
-									variant={
-										selectedKey === "item-2-infectant"
-											? "flat"
-											: "light"
-									}
-									className="justify-start"
-									onPress={() =>
-										setSelectedKey("item-2-infectant")
-									}
-									fullWidth
-									color={
-										selectedKey === "item-2-infectant"
-											? "success"
-											: "default"
-									}
-								>
-									<span className="ml-5 text-sm font-medium">
-										Item 2
-									</span>
-								</Button>
-							</AccordionItem>
-						</Accordion>
-					</ScrollShadow>
+								<span className="ml-5 text-sm font-medium">
+									Item 2
+								</span>
+							</Button>
+						</AccordionItem>
+						<AccordionItem
+							key="2"
+							title="Infectant"
+							classNames={{
+								title: "text-sm font-medium",
+							}}
+							startContent={
+								<DetectAdulterantIcon className="w-6 h-6" />
+							}
+						>
+							<Button
+								variant={
+									selectedKey === "rice-bran-infectant"
+										? "flat"
+										: "light"
+								}
+								className="justify-start"
+								onPress={() =>
+									setSelectedKey("rice-bran-infectant")
+								}
+								fullWidth
+								color={
+									selectedKey === "rice-bran-infectant"
+										? "success"
+										: "default"
+								}
+							>
+								<span className="ml-5 text-sm font-medium">
+									Rice Bran
+								</span>
+							</Button>
+							<Button
+								variant={
+									selectedKey === "item-2-infectant"
+										? "flat"
+										: "light"
+								}
+								className="justify-start"
+								onPress={() =>
+									setSelectedKey("item-2-infectant")
+								}
+								fullWidth
+								color={
+									selectedKey === "item-2-infectant"
+										? "success"
+										: "default"
+								}
+							>
+								<span className="ml-5 text-sm font-medium">
+									Item 2
+								</span>
+							</Button>
+						</AccordionItem>
+					</Accordion>
 				</CardBody>
+				<Divider />
+				<CardFooter>
+					<Button
+						variant="light"
+						className="justify-start"
+						onPress={() =>
+							setTheme(theme === "dark" ? "light" : "dark")
+						}
+						fullWidth
+						startContent={
+							theme === "dark" ? (
+								<SunIcon className="w-5 h-5" />
+							) : (
+								<MoonIcon className="w-5 h-5" />
+							)
+						}
+					>
+						<span className="text-sm font-medium">
+							{theme === "dark" ? "Light Mode" : "Dark Mode"}
+						</span>
+					</Button>
+				</CardFooter>
 			</Card>
 
 			{/* Main Content */}
