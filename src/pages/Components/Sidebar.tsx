@@ -54,7 +54,7 @@ export function Sidebar() {
 	};
 
 	return (
-		<div className="flex h-screen w-full overflow-hidden">
+		<div className="flex h-screen overflow-hidden">
 			{/* Sidebar */}
 			<Card className="rounded-none h-full w-72">
 				{/* Header */}
