@@ -16,6 +16,7 @@ import {
 	HomeIcon,
 	SunIcon,
 	MoonIcon,
+	ChevronLeft,
 } from "@/components/icons";
 import { useTheme } from "@heroui/use-theme";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -54,23 +55,23 @@ export function Sidebar() {
 	};
 
 	return (
-		<div className="flex h-screen overflow-hidden">
+		<div className="flex h-full overflow-hidden flex-shrink-0">
 			{/* Sidebar */}
-			<Card className="rounded-none h-full w-72">
+			<Card className="rounded-none h-full w-125">
 				{/* Header */}
 				<CardHeader className="py-4 px-4">
 					<div className="flex items-center gap-3 w-full">
 						<Image
 							src="/vsu_logo.jpg"
 							alt="VSU Logo"
-							className="rounded-sm w-15 h-15 object-cover"
+							className="rounded-sm w-30 h-30 object-cover"
 						/>
 
 						<div className="flex flex-col leading-tight items-center">
-							<span className="font-bold uppercase text-3xl tracking-wide">
+							<span className="font-bold uppercase text-5xl tracking-wide">
 								VISAYAS
 							</span>
-							<span className="text-xs font-semibold uppercase text-default-500 tracking-wider">
+							<span className="text-xl font-semibold uppercase text-default-500 tracking-wider">
 								STATE UNIVERSITY
 							</span>
 						</div>
@@ -79,21 +80,22 @@ export function Sidebar() {
 				<Divider />
 
 				<CardBody className="px-3 overflow-hidden">
-					<div className="text-xs font-semibold uppercase text-default-500 tracking-wider mb-1 ml-2">
+					<div className="text-2xl font-semibold uppercase text-default-500 tracking-wider mb-1 ml-2">
 						MENU
 					</div>
 					<Button
 						variant={selectedKey === "home" ? "flat" : "light"}
-						className="justify-start"
+						className="h-20 justify-start"
 						onPress={() => handleNavigation("/home")}
 						fullWidth
+						size="lg"
 						color={selectedKey === "home" ? "success" : "default"}
-						startContent={<HomeIcon className="w-5 h-5" />}
+						startContent={<HomeIcon className="w-15" />}
 					>
-						<span className="text-sm font-medium">Home</span>
+						<span className="text-3xl font-medium">Home</span>
 					</Button>
 
-					<div className="text-xs font-semibold uppercase text-default-500 tracking-wider mt-3 mb-1 ml-2">
+					<div className="text-2xl font-semibold uppercase text-default-500 tracking-wider mt-3 mb-1 ml-2">
 						DETECTION
 					</div>
 					<Accordion
@@ -107,11 +109,15 @@ export function Sidebar() {
 							key="1"
 							title="Adulterant"
 							classNames={{
-								title: "text-sm font-medium",
+								title: "text-3xl font-medium",
 							}}
+							className="mb-3"
 							startContent={
-								<DetectAdulterantIcon className="w-6 h-6" />
+								<DetectAdulterantIcon className="w-10" />
 							}
+							indicator={() => (
+								<ChevronLeft className="w-6 h-6" />
+							)}
 						>
 							<div className="flex flex-col gap-1">
 								<Button
@@ -120,7 +126,7 @@ export function Sidebar() {
 											? "flat"
 											: "light"
 									}
-									className="justify-start"
+									className="justify-start h-20"
 									onPress={() =>
 										handleNavigation(
 											"/adulterant-rice-bran",
@@ -133,7 +139,7 @@ export function Sidebar() {
 											: "default"
 									}
 								>
-									<span className="ml-5 text-sm font-medium">
+									<span className="ml-5 text-3xl font-medium">
 										Rice Bran
 									</span>
 								</Button>
@@ -143,7 +149,7 @@ export function Sidebar() {
 											? "flat"
 											: "light"
 									}
-									className="justify-start"
+									className="justify-start h-20"
 									onPress={() =>
 										handleNavigation("/adulterant-item2")
 									}
@@ -154,7 +160,7 @@ export function Sidebar() {
 											: "default"
 									}
 								>
-									<span className="ml-5 text-sm font-medium">
+									<span className="ml-5 text-3xl font-medium">
 										Item 2
 									</span>
 								</Button>
@@ -164,11 +170,14 @@ export function Sidebar() {
 							key="2"
 							title="Infestant"
 							classNames={{
-								title: "text-sm font-medium",
+								title: "text-3xl font-medium",
 							}}
 							startContent={
-								<DetectAdulterantIcon className="w-6 h-6" />
+								<DetectAdulterantIcon className="w-10" />
 							}
+							indicator={() => (
+								<ChevronLeft className="w-6 h-6" />
+							)}
 						>
 							<div className="flex flex-col gap-1">
 								<Button
@@ -177,7 +186,7 @@ export function Sidebar() {
 											? "flat"
 											: "light"
 									}
-									className="justify-start"
+									className="justify-start h-20"
 									onPress={() =>
 										handleNavigation("/infestant-rice-bran")
 									}
@@ -188,7 +197,7 @@ export function Sidebar() {
 											: "default"
 									}
 								>
-									<span className="ml-5 text-sm font-medium">
+									<span className="ml-5 text-3xl font-medium">
 										Rice Bran
 									</span>
 								</Button>
@@ -198,7 +207,7 @@ export function Sidebar() {
 											? "flat"
 											: "light"
 									}
-									className="justify-start"
+									className="justify-start h-20"
 									onPress={() =>
 										handleNavigation("/infestant-item2")
 									}
@@ -209,7 +218,7 @@ export function Sidebar() {
 											: "default"
 									}
 								>
-									<span className="ml-5 text-sm font-medium">
+									<span className="ml-5 text-3xl font-medium">
 										Item 2
 									</span>
 								</Button>
@@ -221,20 +230,20 @@ export function Sidebar() {
 				<CardFooter>
 					<Button
 						variant="light"
-						className="justify-start"
+						className="justify-start h-20"
 						onPress={() =>
 							setTheme(theme === "dark" ? "light" : "dark")
 						}
 						fullWidth
 						startContent={
 							theme === "dark" ? (
-								<SunIcon className="w-5 h-5" />
+								<SunIcon className="w-10" />
 							) : (
-								<MoonIcon className="w-5 h-5" />
+								<MoonIcon className="w-10" />
 							)
 						}
 					>
-						<span className="text-sm font-medium">
+						<span className="text-3xl font-medium">
 							{theme === "dark" ? "Light Mode" : "Dark Mode"}
 						</span>
 					</Button>

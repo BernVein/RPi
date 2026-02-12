@@ -1,5 +1,4 @@
-import DefaultLayout from "@/layouts/default";
-import { Image, Button, Card, CardBody } from "@heroui/react";
+import { Image, Button } from "@heroui/react";
 import { CameraIcon, UploadIcon } from "@/components/icons";
 import { useState } from "react";
 
@@ -52,67 +51,50 @@ export default function AdulterantRiceBran() {
 	};
 
 	return (
-		<DefaultLayout>
-			<div className="flex flex-col h-screen gap-6 p-6">
-				<h1 className="text-3xl font-semibold">
-					Detect Adulterant from Rice Bran
-				</h1>
+		<div className="flex flex-col h-full w-full overflow-hidden">
+			<div className="flex flex-1 w-full h-full">
+				<div className="relative flex-1 overflow-hidden">
+					{/* file input */}
+					<input
+						type="file"
+						accept="image/*"
+						onChange={handleFileChange}
+						className="hidden"
+						id="fileInput"
+					/>
 
-				<div className="flex gap-6 w-full flex-1">
-					<div className="relative flex-1 rounded-xl overflow-hidden">
-						<input
-							type="file"
-							accept="image/*"
-							onChange={handleFileChange}
-							className="hidden"
-							id="fileInput"
-						/>
-						<Image
-							alt="Rice Bran"
-							src="https://heroui.com/images/hero-card-complete.jpeg"
-							fallbackSrc="https://via.placeholder.com/800x500"
-							className="w-full h-210 object-cover"
-						/>
+					{/* image */}
+					<Image
+						alt="Rice Bran"
+						src="/vsu_logo.jpg"
+						fallbackSrc="https://via.placeholder.com"
+						className="w-full h-full object-cover rounded-none"
+					/>
 
-						<div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10">
-							<Button
-								color="danger"
-								size="lg"
-								className="h-20 w-80"
-								startContent={
-									<CameraIcon className="size-15" />
-								}
-							>
-								<p className="text-xl">Test for Adulteration</p>
-							</Button>
-						</div>
-
-						<div className="absolute bottom-4 right-4 z-10">
-							<Button
-								color="default"
-								className="h-15 w-20"
-								startContent={
-									<UploadIcon className="size-15" />
-								}
-								onPress={handleUploadClick}
-							/>
-						</div>
+					{/* buttons */}
+					<div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10">
+						<Button
+							color="danger"
+							size="lg"
+							className="h-20 w-100 shadow-2xl"
+							startContent={<CameraIcon className="w-30" />}
+						>
+							<p className="text-3xl">Test for Adulteration</p>
+						</Button>
 					</div>
 
-					<div className="w-1/3">
-						<Card className="h-full">
-							<CardBody className="flex flex-col gap-4">
-								<h2 className="text-xl font-semibold">
-									Prediction Details
-								</h2>
-								<p>Status: -</p>
-								<p>Confidence: -</p>
-								<p>Inference Time: -</p>
-							</CardBody>
-						</Card>
+					<div className="absolute bottom-10 right-10 z-10">
+						<Button
+							isIconOnly
+							color="default"
+							variant="flat"
+							className="h-16 w-16 min-w-16 shadow-xl backdrop-blur-md"
+							startContent={<UploadIcon className="size-8" />}
+							onPress={handleUploadClick}
+						/>
 					</div>
 				</div>
 			</div>
-		</DefaultLayout>
+		</div>
 	);
 }
