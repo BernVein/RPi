@@ -76,6 +76,54 @@ def capture():
         "filename": filename
     })
 
+#Inference code (commented out for now, can be enabled when model is ready)
+
+# import numpy as np
+# import tensorflow as tf
+# from tensorflow.keras.preprocessing import image
+# from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
+
+# # Load model once (important for performance)
+# model = tf.keras.models.load_model("rice_bran_adulteration_mobilenetv2.h5")
+
+# def predict_image(img_path):
+#     """
+#     Accepts one image path and returns:
+#     - label (Adulterated / Unadulterated)
+#     - confidence score
+#     """
+
+#     # Load and preprocess image
+#     img = image.load_img(img_path, target_size=(224, 224))
+#     img_array = image.img_to_array(img)
+#     img_array = np.expand_dims(img_array, axis=0)
+#     img_array = preprocess_input(img_array)
+
+#     # Predict
+#     prediction = model.predict(img_array, verbose=0)[0][0]
+
+#     # Interpret result
+#     if prediction >= 0.5:
+#         label = "Unadulterated"
+#         confidence = float(prediction)
+#     else:
+#         label = "Adulterated"
+#         confidence = float(1 - prediction)
+
+#     return label, confidence
+
+
+# # ---------------------------
+# # Example usage
+# # ---------------------------
+# if __name__ == "__main__":
+#     img_path = "test_image.jpg"  # Change to your image path
+#     label, confidence = predict_image(img_path)
+
+#     print(f"Prediction: {label}")
+#     print(f"Confidence: {confidence:.4f}")
+
+
 
 
 if __name__ == "__main__":
