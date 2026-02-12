@@ -3,9 +3,5 @@ export default function DefaultLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	return (
-		<main className="container mx-auto max-w-7xl px-6 flex-grow pt-16">
-			{children}
-		</main>
-	);
+	return <main className=" mx-auto px-7">{children}</main>;
 }
