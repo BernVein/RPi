@@ -4,7 +4,7 @@ import { CameraIcon, UploadIcon } from "@/components/icons";
 import { useState } from "react";
 
 export default function AdulterantRiceBran() {
-	const [imageFile, setImageFile] = useState<File | null>(null);
+	const [, setImageFile] = useState<File | null>(null);
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (!e.target.files || e.target.files.length === 0) return;
