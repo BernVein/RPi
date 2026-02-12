@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Button } from "@heroui/button";
+import { useState, useEffect } from "react";
 import {
 	Card,
 	CardBody,
@@ -7,26 +6,64 @@ import {
 	Image,
 	Accordion,
 	AccordionItem,
+	Divider,
+	Button,
+	CardFooter,
 } from "@heroui/react";
-import { ScrollShadow } from "@heroui/scroll-shadow";
-import { Listbox, ListboxItem, ListboxSection } from "@heroui/listbox";
-import { HomeIcon, DetectAdulterantIcon } from "@/components/icons";
+import type { Selection } from "@heroui/react";
+import {
+	DetectAdulterantIcon,
+	HomeIcon,
+	SunIcon,
+	MoonIcon,
+} from "@/components/icons";
+import { useTheme } from "@heroui/use-theme";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function Sidebar() {
+	const navigate = useNavigate();
+	const location = useLocation();
 	const [selectedKey, setSelectedKey] = useState<string>("home");
-	// const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+	const [expandedKeys, setExpandedKeys] = useState<Selection>(
+		new Set<string>([]),
+	);
+	const { theme, setTheme } = useTheme();
+
+	useEffect(() => {
+		const path = location.pathname;
+		if (path === "/" || path === "/home") {
+			setSelectedKey("home");
+			setExpandedKeys(new Set<string>([]));
+		} else if (path === "/adulterant-rice-bran") {
+			setSelectedKey("rice-bran-adulterant");
+			setExpandedKeys(new Set<string>(["1"])); // Key for Adulterant
+		} else if (path === "/adulterant-item2") {
+			setSelectedKey("item-2-adulterant");
+			setExpandedKeys(new Set<string>(["1"]));
+		} else if (path === "/infestant-rice-bran") {
+			setSelectedKey("rice-bran-infestant");
+			setExpandedKeys(new Set<string>(["2"])); // Key for Infestant
+		} else if (path === "/infestant-item2") {
+			setSelectedKey("item-2-infestant");
+			setExpandedKeys(new Set<string>(["2"]));
+		}
+	}, [location.pathname]);
+
+	const handleNavigation = (path: string) => {
+		navigate(path);
+	};
 
 	return (
-		<div className="flex h-screen w-full overflow-hidden bg-default-50">
+		<div className="flex h-screen overflow-hidden">
 			{/* Sidebar */}
-			<Card className="rounded-none h-full transition-all duration-300 border-r border-divider w-72">
+			<Card className="rounded-none h-full w-72">
 				{/* Header */}
 				<CardHeader className="py-4 px-4">
 					<div className="flex items-center gap-3 w-full">
 						<Image
 							src="/vsu_logo.jpg"
 							alt="VSU Logo"
-							className="rounded-full w-15 h-15 object-cover"
+							className="rounded-sm w-15 h-15 object-cover"
 						/>
 
 						<div className="flex flex-col leading-tight items-center">
@@ -39,123 +76,169 @@ export function Sidebar() {
 						</div>
 					</div>
 				</CardHeader>
+				<Divider />
 
 				<CardBody className="px-3 overflow-hidden">
-					{/* Collapse Button */}
-					{/* <div
-						className={`flex items-center mb-4 ${isCollapsed ? "justify-center" : "justify-end"}`}
+					<div className="text-xs font-semibold uppercase text-default-500 tracking-wider mb-1 ml-2">
+						MENU
+					</div>
+					<Button
+						variant={selectedKey === "home" ? "flat" : "light"}
+						className="justify-start"
+						onPress={() => handleNavigation("/home")}
+						fullWidth
+						color={selectedKey === "home" ? "success" : "default"}
+						startContent={<HomeIcon className="w-5 h-5" />}
 					>
-						<Button
-							isIconOnly
-							variant="light"
-							size="sm"
-							onPress={() => setIsCollapsed(!isCollapsed)}
-						>
-							<MenuIcon className="w-5" />
-						</Button>
-					</div> */}
+						<span className="text-sm font-medium">Home</span>
+					</Button>
 
-					<ScrollShadow className="h-full pr-2">
-						<Listbox
-							selectedKeys={new Set([selectedKey])}
-							selectionMode="single"
-							hideSelectedIcon
-							onAction={(key) => setSelectedKey(key as string)}
+					<div className="text-xs font-semibold uppercase text-default-500 tracking-wider mt-3 mb-1 ml-2">
+						DETECTION
+					</div>
+					<Accordion
+						isCompact
+						className="ml-2"
+						showDivider={false}
+						selectedKeys={expandedKeys}
+						onSelectionChange={setExpandedKeys}
+					>
+						<AccordionItem
+							key="1"
+							title="Adulterant"
+							classNames={{
+								title: "text-sm font-medium",
+							}}
+							startContent={
+								<DetectAdulterantIcon className="w-6 h-6" />
+							}
 						>
-							<ListboxSection title="MENU">
-								{/* Home */}
-								<ListboxItem
-									key="home"
-									startContent={<HomeIcon className="w-5" />}
+							<div className="flex flex-col gap-1">
+								<Button
+									variant={
+										selectedKey === "rice-bran-adulterant"
+											? "flat"
+											: "light"
+									}
+									className="justify-start"
+									onPress={() =>
+										handleNavigation(
+											"/adulterant-rice-bran",
+										)
+									}
+									fullWidth
+									color={
+										selectedKey === "rice-bran-adulterant"
+											? "success"
+											: "default"
+									}
 								>
-									<span className="text-sm font-medium">
-										Home
+									<span className="ml-5 text-sm font-medium">
+										Rice Bran
 									</span>
-								</ListboxItem>
-							</ListboxSection>
-
-							{/* Detect Section */}
-							<ListboxSection title="DETECT">
-								<ListboxItem key="detect-adulteration">
-									<Accordion
-										isCompact
-										variant="light"
-										className="w-full px-0 "
-									>
-										<AccordionItem
-											startContent={
-												<DetectAdulterantIcon className="w-5" />
-											}
-											title={
-												<span className="text-sm font-medium">
-													Adulteration
-												</span>
-											}
-											className="px-0"
-										>
-											<div className="flex flex-col gap-1 pl-6">
-												<Button
-													variant="light"
-													className="justify-start"
-												>
-													Rice Bran
-												</Button>
-												<Button
-													variant="light"
-													className="justify-start"
-												>
-													Sample 2
-												</Button>
-											</div>
-										</AccordionItem>
-									</Accordion>
-								</ListboxItem>
-
-								<ListboxItem key="detect-infestation">
-									<Accordion
-										isCompact
-										variant="light"
-										className="w-full px-0"
-									>
-										<AccordionItem
-											startContent={
-												<DetectAdulterantIcon className="w-5" />
-											}
-											title={
-												<span className="text-sm font-medium">
-													Infestation
-												</span>
-											}
-											className="px-0"
-										>
-											<div className="flex flex-col gap-1 pl-6">
-												<Button
-													variant="light"
-													className="justify-start"
-												>
-													Sample A
-												</Button>
-												<Button
-													variant="light"
-													className="justify-start"
-												>
-													Sample B
-												</Button>
-											</div>
-										</AccordionItem>
-									</Accordion>
-								</ListboxItem>
-							</ListboxSection>
-						</Listbox>
-					</ScrollShadow>
+								</Button>
+								<Button
+									variant={
+										selectedKey === "item-2-adulterant"
+											? "flat"
+											: "light"
+									}
+									className="justify-start"
+									onPress={() =>
+										handleNavigation("/adulterant-item2")
+									}
+									fullWidth
+									color={
+										selectedKey === "item-2-adulterant"
+											? "success"
+											: "default"
+									}
+								>
+									<span className="ml-5 text-sm font-medium">
+										Item 2
+									</span>
+								</Button>
+							</div>
+						</AccordionItem>
+						<AccordionItem
+							key="2"
+							title="Infestant"
+							classNames={{
+								title: "text-sm font-medium",
+							}}
+							startContent={
+								<DetectAdulterantIcon className="w-6 h-6" />
+							}
+						>
+							<div className="flex flex-col gap-1">
+								<Button
+									variant={
+										selectedKey === "rice-bran-infestant"
+											? "flat"
+											: "light"
+									}
+									className="justify-start"
+									onPress={() =>
+										handleNavigation("/infestant-rice-bran")
+									}
+									fullWidth
+									color={
+										selectedKey === "rice-bran-infestant"
+											? "success"
+											: "default"
+									}
+								>
+									<span className="ml-5 text-sm font-medium">
+										Rice Bran
+									</span>
+								</Button>
+								<Button
+									variant={
+										selectedKey === "item-2-infestant"
+											? "flat"
+											: "light"
+									}
+									className="justify-start"
+									onPress={() =>
+										handleNavigation("/infestant-item2")
+									}
+									fullWidth
+									color={
+										selectedKey === "item-2-infestant"
+											? "success"
+											: "default"
+									}
+								>
+									<span className="ml-5 text-sm font-medium">
+										Item 2
+									</span>
+								</Button>
+							</div>
+						</AccordionItem>
+					</Accordion>
 				</CardBody>
-			</Card>
-
-			{/* Main Content */}
-			<Card className="flex-1 rounded-none">
-				<CardBody className="p-10 overflow-y-auto">
-					<div className="max-w-4xl mx-auto"></div>
-				</CardBody>
+				<Divider />
+				<CardFooter>
+					<Button
+						variant="light"
+						className="justify-start"
+						onPress={() =>
+							setTheme(theme === "dark" ? "light" : "dark")
+						}
+						fullWidth
+						startContent={
+							theme === "dark" ? (
+								<SunIcon className="w-5 h-5" />
+							) : (
+								<MoonIcon className="w-5 h-5" />
+							)
+						}
+					>
+						<span className="text-sm font-medium">
+							{theme === "dark" ? "Light Mode" : "Dark Mode"}
+						</span>
+					</Button>
+				</CardFooter>
 			</Card>
 		</div>
 	);
