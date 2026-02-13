@@ -60,6 +60,7 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
+@app.route('/capture')
 def capture():
     try:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -87,7 +88,6 @@ def capture():
             "status": "error",
             "message": str(e)
         })
-
 #Inference code (commented out for now, can be enabled when model is ready)
 
 # import numpy as np
