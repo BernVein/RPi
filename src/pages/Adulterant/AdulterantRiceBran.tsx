@@ -10,6 +10,20 @@ export default function AdulterantRiceBran() {
 		setImageFile(e.target.files[0]);
 	};
 
+	const handleCaptureClick = async () => {
+		try {
+			const res = await fetch(
+				"http://FeedAdulterantSBC.local:5000/capture",
+			);
+			const data = await res.json();
+
+			alert(`Captured!\nFilename: ${data.filename}`);
+		} catch (err) {
+			console.error(err);
+			alert("Capture failed!");
+		}
+	};
+
 	const handleUploadClick = () => {
 		const fileInput = document.getElementById(
 			"fileInput",
@@ -26,10 +40,13 @@ export default function AdulterantRiceBran() {
 			formData.append("file", file);
 
 			try {
-				const res = await fetch("http://192.168.254.135:5000/predict", {
-					method: "POST",
-					body: formData,
-				});
+				const res = await fetch(
+					"http://FeedAdulterantSBC.local:5000/capture",
+					{
+						method: "POST",
+						body: formData,
+					},
+				);
 				const data = await res.json();
 
 				console.log(
@@ -87,6 +104,7 @@ export default function AdulterantRiceBran() {
 					size="lg"
 					className="h-24 px-12 rounded-2xl"
 					startContent={<CameraIcon className="w-10 h-10" />}
+					onPress={handleCaptureClick}
 				>
 					<span className="text-4xl font-semibold">
 						Capture & Analyze
