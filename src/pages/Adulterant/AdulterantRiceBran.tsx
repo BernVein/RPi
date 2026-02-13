@@ -66,7 +66,8 @@ export default function AdulterantRiceBran() {
 					{/* image */}
 					<Image
 						alt="Rice Bran"
-						src="http://192.168.42.1:5000/video_feed"
+						src="http://FeedAdulterantSBC.local:5000/video_feed"
+						// src="http://192.168.254.111:5000/video_feed"
 						fallbackSrc="https://via.placeholder.com"
 						className="w-full h-full object-cover rounded-none"
 					/>
