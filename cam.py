@@ -67,19 +67,15 @@ def capture():
     filename = f"capture_{timestamp}.jpg"
     filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
 
-    picam2.stop() 
-
-    picam2.switch_mode_and_capture_file(still_config, filepath)
-
-    picam2.configure(preview_config)
-    picam2.start()
+    picam2.capture_file(filepath)
 
     return jsonify({
         "status": "success",
-        "message": "High-res image captured",
+        "message": "Image captured",
         "filename": filename,
         "saved_at": filepath,
     })
+
 
 #Inference code (commented out for now, can be enabled when model is ready)
 
