@@ -12,7 +12,7 @@ function App() {
 		<ScalingWrapper>
 			<div className="relative flex w-full h-full">
 				<Sidebar />
-				<div className="flex-grow overflow-y-auto">
+				<div className="flex-grow overflow-hidden">
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/home" element={<Home />} />

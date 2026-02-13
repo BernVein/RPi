@@ -51,49 +51,57 @@ export default function AdulterantRiceBran() {
 	};
 
 	return (
-		<div className="flex flex-col h-full w-full overflow-hidden">
-			<div className="flex flex-1 w-full h-full">
-				<div className="relative flex-1 overflow-hidden">
-					{/* file input */}
-					<input
-						type="file"
-						accept="image/*"
-						onChange={handleFileChange}
-						className="hidden"
-						id="fileInput"
-					/>
+		<div className="flex flex-col h-full w-full overflow-hidden p-8">
+			{/* Top 3/4: Title and Image Stream */}
+			<div className="h-3/4 flex flex-col items-center justify-center gap-6">
+				<h1 className="text-5xl font-bold text-center">
+					Detect Rice Bran Adulteration
+				</h1>
 
-					{/* image */}
-					<Image
-						alt="Rice Bran"
-						src="http://FeedAdulterantSBC.local:5000/video_feed"
-						fallbackSrc="https://via.placeholder.com"
-						className="w-[6550px] h-full object-cover rounded-none"
-					/>
-
-					{/* buttons */}
-					<div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10">
-						<Button
-							color="danger"
-							size="lg"
-							className="h-20 w-100 shadow-2xl"
-							startContent={<CameraIcon className="w-30" />}
-						>
-							<p className="text-3xl">Test for Adulteration</p>
-						</Button>
-					</div>
-
-					<div className="absolute bottom-10 right-10 z-10">
-						<Button
-							isIconOnly
-							color="default"
-							variant="flat"
-							className="h-16 w-16 min-w-16 shadow-xl backdrop-blur-md"
-							startContent={<UploadIcon className="size-8" />}
-							onPress={handleUploadClick}
+				<div className="w-full flex-1 flex items-center justify-center min-h-0">
+					<div className="relative aspect-video h-full max-w-full shadow-2xl rounded-3xl overflow-hidden border-4 border-white/10">
+						<Image
+							alt="Rice Bran"
+							src="http://FeedAdulterantSBC.local:5000/video_feed"
+							fallbackSrc="https://via.placeholder.com/1920x1080?text=Waiting+for+Video+Feed..."
+							className="w-full h-full object-cover"
+							removeWrapper
 						/>
 					</div>
 				</div>
+			</div>
+
+			{/* file input (hidden) */}
+			<input
+				type="file"
+				accept="image/*"
+				onChange={handleFileChange}
+				className="hidden"
+				id="fileInput"
+			/>
+
+			{/* Bottom 1/4: Action Buttons */}
+			<div className="h-1/4 flex items-center justify-center gap-8">
+				<Button
+					color="danger"
+					size="lg"
+					className="h-24 px-12 rounded-2xl"
+					startContent={<CameraIcon className="w-10 h-10" />}
+				>
+					<span className="text-4xl font-semibold">
+						Capture & Analyze
+					</span>
+				</Button>
+
+				<Button
+					isIconOnly
+					color="default"
+					variant="flat"
+					className="h-20 w-20 min-w-20 rounded-2xl shadow-xl backdrop-blur-md bg-white/10 border border-white/20 transition-all hover:bg-white/20"
+					onPress={handleUploadClick}
+				>
+					<UploadIcon className="w-10 h-10" />
+				</Button>
 			</div>
 		</div>
 	);
