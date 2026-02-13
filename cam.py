@@ -29,16 +29,35 @@ picam2 = Picamera2()
 
 # --- PREVIEW CONFIG (fast streaming) ---
 preview_config = picam2.create_preview_configuration(
-    main={"size": (3280, 1845)}
+    main={"size": (3280, 2464)}
 )
 
 # --- STILL CONFIG (full resolution) ---
 still_config = picam2.create_still_configuration(
-    main={"size": (3280, 1845)}
+    main={"size": (3280, 2464)}
 )
 
 picam2.configure(preview_config)
 picam2.start()
+
+# ---------------------------
+# Apply ROI (0.115,0.2,0.72,0.72)
+# ---------------------------
+
+sensor_width = 3280
+sensor_height = 2464
+
+roi = (0.115, 0.2, 0.72, 0.72)
+
+x = int(roi[0] * sensor_width)
+y = int(roi[1] * sensor_height)
+w = int(roi[2] * sensor_width)
+h = int(roi[3] * sensor_height)
+
+picam2.set_controls({
+    "ScalerCrop": (x, y, w, h)
+})
+
 
 
 def generate_frames():
