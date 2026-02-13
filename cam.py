@@ -29,7 +29,7 @@ picam2 = Picamera2()
 
 # --- PREVIEW CONFIG (fast streaming) ---
 preview_config = picam2.create_preview_configuration(
-    main={"size": (3280 // 3, 1845 // 3)}
+    main={"size": (3280, 1845)}
 )
 
 # --- STILL CONFIG (full resolution) ---
@@ -67,18 +67,20 @@ def capture():
     filename = f"capture_{timestamp}.jpg"
     filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
 
-    # Capture full-res still
+    picam2.stop() 
+
     picam2.switch_mode_and_capture_file(still_config, filepath)
 
-    # Switch back to preview mode
     picam2.configure(preview_config)
     picam2.start()
 
     return jsonify({
         "status": "success",
         "message": "High-res image captured",
-        "filename": filename
+        "filename": filename,
+        "saved_at": filepath,
     })
+
 #Inference code (commented out for now, can be enabled when model is ready)
 
 # import numpy as np
