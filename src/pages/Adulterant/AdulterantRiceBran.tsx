@@ -12,7 +12,9 @@ export default function AdulterantRiceBran() {
 
 	const handleCaptureClick = async () => {
 		try {
-			const res = await fetch("http://192.168.1.100:5000/capture"); // Use IP
+			const res = await fetch(
+				"http://FeedAdulterantSBC.local:5000/capture",
+			);
 			if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 			const data = await res.json();
 			if (data.status === "error") throw new Error(data.message);
