@@ -29,12 +29,12 @@ picam2 = Picamera2()
 
 # --- PREVIEW CONFIG (fast streaming) ---
 preview_config = picam2.create_preview_configuration(
-    main={"size": (3280 // 3, 2464 // 3)}
+    main={"size": (3280 // 3, 1845 // 3)}
 )
 
 # --- STILL CONFIG (full resolution) ---
 still_config = picam2.create_still_configuration(
-    main={"size": (3280, 2464)}
+    main={"size": (3280, 1845)}
 )
 
 picam2.configure(preview_config)
