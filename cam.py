@@ -60,26 +60,33 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-@app.route('/capture')
 def capture():
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"capture_{timestamp}.jpg"
+    try:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"capture_{timestamp}.jpg"
+        filepath = os.path.join(os.getcwd(), filename)
 
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    filepath = os.path.join(current_dir, filename)
+        # Stop preview first (important!)
+        picam2.stop()
+        # Capture still
+        picam2.configure(still_config)
+        picam2.start()
+        picam2.capture_file(filepath)
+        # Restart preview
+        picam2.configure(preview_config)
+        picam2.start()
 
-    # 🔥 Switch to high-res still mode
-    picam2.switch_mode_and_capture_file(still_config, filepath)
-
-    # 🔥 Switch back to preview mode
-    picam2.configure(preview_config)
-    picam2.start()
-
-    return jsonify({
-        "status": "success",
-        "message": "High quality image captured",
-        "filename": filename
-    })
+        return jsonify({
+            "status": "success",
+            "message": "High quality image captured",
+            "filename": filename
+        })
+    except Exception as e:
+        print("Capture error:", e)
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        })
 
 #Inference code (commented out for now, can be enabled when model is ready)
 
